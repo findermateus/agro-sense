@@ -12,6 +12,19 @@ AppFactory::setContainer($container);
 
 $app = AppFactory::create();
 
+$app->add(function ($request, $handler) {
+    $response = $handler->handle($request);
+
+    return $response
+        ->withHeader('Access-Control-Allow-Origin', '*')
+        ->withHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-Requested-With')
+        ->withHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE, OPTIONS');
+});
+
+$app->options('/{routes:.+}', function ($request, $response) {
+    return $response;
+});
+
 $errorMiddleware = $app->addErrorMiddleware(true, true, true);
 
 $customErrorHandler = function (
