@@ -11,7 +11,7 @@ class ApiTokenMiddleware
 {
     public function __invoke(RequestInterface $request, RequestHandlerInterface $requestHandler): ResponseInterface
     {
-        $requestApiToken = $request->getHeaderLine('ApiToken');
+        $requestApiToken = $request->getHeaderLine('apitoken');
         $apiToken = getenv('API_TOKEN');
 
         if ($apiToken !== $requestApiToken) {
